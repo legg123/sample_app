@@ -1,5 +1,7 @@
 require 'rubygems'
+require 'spork'
 
+Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
@@ -40,10 +42,11 @@ require 'rubygems'
     # the seed, which is printed after each run.
     #     --seed 1234
     config.order = "random"
-    # Include the Capybara DSL so that specs in spec/requests still work.
     config.include Capybara::DSL
-    # Disable the old-style object.should syntax.
-    config.expect_with :rspec do |c|
-      c.syntax = :expect
-    end
   end
+end
+
+Spork.each_run do
+  # This code will be run each time you run your specs.
+
+end
